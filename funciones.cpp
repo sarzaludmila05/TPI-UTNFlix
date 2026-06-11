@@ -14,6 +14,8 @@ void mostrarmenu() {
     cout << " Ingrese una opcion: " << endl;
 }
 
+//LOTE DE GENEROS
+
 int cargargeneros(int codigos[], string nombres[]) {
     cargadolotegeneros = 0;
     for (int i = 0; i < 8; i++) {
@@ -36,6 +38,8 @@ int cargargeneros(int codigos[], string nombres[]) {
     cout << "La carga del lote numero 1 se ha realizado con exito!!" << endl;
     return 1;
 }
+
+//LOTE DE CONTENIDOS
 
 int cargarcontenidos(int lotegeneroscargado, int codigosCont[], string titulos[], char tipos[], int duraciones[], float puntajes[], int codGenerosCont[], int codigos[]) {
     string titulo;
@@ -87,6 +91,8 @@ int cargarcontenidos(int lotegeneroscargado, int codigosCont[], string titulos[]
     return 1;
 }
 
+//LOTE DE SUSCRPTORES
+
 int cargarsuscriptores(int codSus[], int cantPan[], string nomSus[], char planes[]) {
     int codsuscriptor, cantpantallas;
     string nomsuscriptor;
@@ -121,6 +127,8 @@ int cargarsuscriptores(int codSus[], int cantPan[], string nomSus[], char planes
     return 1;
 }
 
+//LOTE DE REPRODUCCIONES
+
 int cargarreproducciones(int lotegeneroscargado, int lotecontenidoscargado, int lotesuscriptorcargado,
                          int codigosCont[], char tipos[], int duraciones[], int codGenerosCont[],
                          int codSus[], char planes[],
@@ -134,10 +142,59 @@ int cargarreproducciones(int lotegeneroscargado, int lotecontenidoscargado, int 
     cout << "Ingrese el numero de reproduccion (0 para terminar): ";
     cin >> nroReproduccion;
     while (nroReproduccion != 0) {
-        cout << "Reproduccion " << nroReproduccion << " registrada." << endl;
-        cout << "Ingrese el numero de reproduccion (0 para terminar): ";
-        cin >> nroReproduccion;
-    }
-    cout << "Lote de reproducciones procesado." << endl;
+
+        int codContenido;
+        cout << "Codigo de contenido: ";
+        cin >> codContenido;
+        int indiceContenido = -1;
+        for (int i = 0; i < 15; i++) {
+            if (codigosCont[i] == codContenido) {
+                indiceContenido = i;
+                break;
+            }
+        }
+        if (indiceContenido == -1) {
+            cout << "ERROR: Codigo de contenido inexistente." << endl;
+            cout << "Ingrese el numero de reproduccion (0 para terminar): ";
+            cin >> nroReproduccion;
+            continue;
+        }
+
+        int codSuscriptor;
+        cout << "Codigo de suscriptor: ";
+        cin >> codSuscriptor;
+        int indiceSuscriptor = -1;
+        for (int i = 0; i < 12; i++) {
+            if (codSus[i] == codSuscriptor) {
+                indiceSuscriptor = i;
+                break;
+            }
+        }
+        if (indiceSuscriptor == -1) {
+            cout << "ERROR: Codigo de suscriptor inexistente." << endl;
+            cout << "Ingrese el numero de reproduccion (0 para terminar): ";
+            cin >> nroReproduccion;
+            continue;
+        }
+        
+        int dia;
+        cout << "Dia de la semana (1=Lunes ... 7=Domingo): ";
+        cin >> dia;
+        if (dia < 1 || dia > 7) {
+            cout << "ERROR: Dia invalido." << endl;
+            cout << "Ingrese el numero de reproduccion (0 para terminar): ";
+            cin >> nroReproduccion;
+            continue;
+        }
+
+        int completo;
+        cout << "Completo la reproduccion? (1=Si / 0=No): ";
+        cin >> completo;
+        if (completo != 0 && completo != 1) {
+            cout << "ERROR: Valor invalido, ingrese 0 o 1." << endl;
+            cout << "Ingrese el numero de reproduccion (0 para terminar): ";
+            cin >> nroReproduccion;
+            continue;
+        }
     return 1;
 }
