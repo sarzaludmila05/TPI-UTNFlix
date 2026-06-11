@@ -2,7 +2,6 @@
 #include "funciones.h"
 using namespace std;
 
-bool cargadolotegeneros;
 
 void mostrarmenu() {
     cout << "1. Cargar lote de generos " << endl;
@@ -17,7 +16,7 @@ void mostrarmenu() {
 //LOTE DE GENEROS
 
 int cargargeneros(int codigos[], string nombres[]) {
-    cargadolotegeneros = 0;
+
     for (int i = 0; i < 8; i++) {
         int cg;
         string ng;
@@ -34,7 +33,7 @@ int cargargeneros(int codigos[], string nombres[]) {
         codigos[i] = cg;
         nombres[i] = ng;
     }
-    cargadolotegeneros = 1;
+
     cout << "La carga del lote numero 1 se ha realizado con exito!!" << endl;
     return 1;
 }
@@ -45,7 +44,7 @@ int cargarcontenidos(int lotegeneroscargado, int codigosCont[], string titulos[]
     string titulo;
     char tipo;
     int duracion, puntaje, codcont, codg;
-    if (cargadolotegeneros == 0) {
+    if (lotegeneroscargado==0) {
         cout << "ERROR: Debe cargar el lote 1 primero." << endl;
         return 0;
     }
@@ -176,7 +175,7 @@ int cargarreproducciones(int lotegeneroscargado, int lotecontenidoscargado, int 
             cin >> nroReproduccion;
             continue;
         }
-        
+
         int dia;
         cout << "Dia de la semana (1=Lunes ... 7=Domingo): ";
         cin >> dia;
@@ -198,3 +197,4 @@ int cargarreproducciones(int lotegeneroscargado, int lotecontenidoscargado, int 
         }
     return 1;
 }
+                         }
