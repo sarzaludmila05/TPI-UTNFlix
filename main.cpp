@@ -60,15 +60,6 @@ int main() {
                     codSus, planes,
                     repsPorContenido, compPorContenido,
                     repsPorPlan, repsPorGenDia, repsPorSuscriptor);
-                // DEBUG TEMPORAL
-                cout << "\n--- VERIFICACION ---" << endl;
-                cout << "Reps contenido[0]: " << repsPorContenido[0] << endl;
-                cout << "Reps completadas[0]: " << compPorContenido[0] << endl;
-                cout << "Reps plan B: " << repsPorPlan[0] << endl;
-                cout << "Reps plan S: " << repsPorPlan[1] << endl;
-                cout << "Reps plan P: " << repsPorPlan[2] << endl;
-                cout << "Reps genero 1 lunes: " << repsPorGenDia[0][0] << endl;
-                cout << "Reps suscriptor[0]: " << repsPorSuscriptor[0] << endl;
                 break;
             case 5:
                 break;
