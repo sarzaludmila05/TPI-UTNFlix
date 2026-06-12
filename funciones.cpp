@@ -195,6 +195,95 @@ int cargarreproducciones(int lotegeneroscargado, int lotecontenidoscargado, int 
             cin >> nroReproduccion;
             continue;
         }
-    return 1;
+repsPorContenido[indiceContenido]++;
+      if (completo==1){
+        compPorContenido[indiceContenido]++;
+      }
+
+
+          return 1;
+}}
+
+
+void mostrarReportes(int lotegeneroscargado, int lotecontenidoscargado,
+                     int codigos[], string nombres[],
+                     int codigosCont[], string titulos[], char tipos[], int codGenerosCont[],
+                     int repsPorContenido[], int compPorContenido[]) {
+
+    if (lotegeneroscargado == 0 || lotecontenidoscargado == 0) {
+        cout << "Error: Faltan cargar lotes para poder ver los reportes." << endl;
+        return;
+    }
+
+    int auxrep, auxcc, auxcomp, auxgen;
+    string auxtc;
+    char auxtipo;
+
+    for (int x = 0; x < 15; x++) {
+        for (int j = 0; j < 14; j++) {
+            if (repsPorContenido[j] < repsPorContenido[j+1]) {
+
+                auxrep = repsPorContenido[j];
+                repsPorContenido[j] = repsPorContenido[j+1];
+                repsPorContenido[j+1] = auxrep;
+
+                auxcc = codigosCont[j];
+                codigosCont[j] = codigosCont[j+1];
+                codigosCont[j+1] = auxcc;
+
+                auxtc = titulos[j];
+                titulos[j] = titulos[j+1];
+                titulos[j+1] = auxtc;
+
+                auxtipo = tipos[j];
+                tipos[j] = tipos[j+1];
+                tipos[j+1] = auxtipo;
+
+                auxgen = codGenerosCont[j];
+                codGenerosCont[j] = codGenerosCont[j+1];
+                codGenerosCont[j+1] = auxgen;
+
+                auxcomp = compPorContenido[j];
+                compPorContenido[j] = compPorContenido[j+1];
+                compPorContenido[j+1] = auxcomp;
+            }
+        }
+    }
+
+    cout << "\n=== REPORTE 1: RANKING DE CONTENIDOS ===" << endl;
+    for (int i = 0; i < 15; i++) {
+        cout << "\n-----------------------------------" << endl;
+        cout << "Codigo: " << codigosCont[i] << endl;
+        cout << "Titulo: " << titulos[i] << endl;
+        cout << "Tipo: " << tipos[i] << endl;
+
+        string nombreGeneroActual = "";
+        for (int g = 0; g < 8; g++) {
+            if (codigos[g] == codGenerosCont[i]) {
+                nombreGeneroActual = nombres[g];
+            }
+        }
+        cout << "Genero: " << nombreGeneroActual << endl;
+        cout << "Reproducciones totales: " << repsPorContenido[i] << endl;
+
+        if (repsPorContenido[i] > 0) {
+            cout << "El porcentaje de las reproducciones completadas es de: " << (compPorContenido[i] * 100.0) / repsPorContenido[i] << "%" << endl;
+        } else {
+            cout << "No hay porcentaje ya que no hay reproducciones" << endl;
+        }
+    }
 }
-                         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

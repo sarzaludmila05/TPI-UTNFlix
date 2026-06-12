@@ -62,6 +62,12 @@ int main() {
                     repsPorPlan, repsPorGenDia, repsPorSuscriptor);
                 break;
             case 5:
+                 cout << "Seleccionaste la opcion numero 5 (Reportes)." << endl;
+                mostrarReportes(lotegeneroscargado, lotecontenidoscargado,
+                                codigos, nombres,
+                                codigosCont, titulos, tipos, codGenerosCont,
+                                repsPorContenido, compPorContenido);
+
                 break;
             case 6:
                 cout << "Saliendo..." << endl;
