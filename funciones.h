@@ -20,7 +20,7 @@ int cargarreproducciones(int lotegeneroscargado, int lotecontenidoscargado, int 
 void mostrarReportes(int lotegeneroscargado, int lotecontenidoscargado,
                      int codigos[], string nombres[],
                      int codigosCont[], string titulos[], char tipos[], int codGenerosCont[],
-                     int repsPorContenido[], int compPorContenido[]);
+                     int repsPorContenido[], int compPorContenido[], int repsPorPlan[]);
 
 
 #endif

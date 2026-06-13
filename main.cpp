@@ -66,7 +66,7 @@ int main() {
                 mostrarReportes(lotegeneroscargado, lotecontenidoscargado,
                                 codigos, nombres,
                                 codigosCont, titulos, tipos, codGenerosCont,
-                                repsPorContenido, compPorContenido);
+                                repsPorContenido, compPorContenido,repsPorPlan);
 
                 break;
             case 6:

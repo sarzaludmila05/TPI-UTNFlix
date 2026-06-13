@@ -195,20 +195,45 @@ int cargarreproducciones(int lotegeneroscargado, int lotecontenidoscargado, int 
             cin >> nroReproduccion;
             continue;
         }
-repsPorContenido[indiceContenido]++;
-      if (completo==1){
-        compPorContenido[indiceContenido]++;
-      }
 
 
-          return 1;
-}}
+        repsPorContenido[indiceContenido]++;
+        if (completo == 1) {
+            compPorContenido[indiceContenido]++;
+        }
+
+        repsPorSuscriptor[indiceSuscriptor]++;
+
+        char planDelSuscriptor = planes[indiceSuscriptor];
+        if (planDelSuscriptor == 'B') {
+            repsPorPlan[0]++;
+        } else if (planDelSuscriptor == 'S') {
+            repsPorPlan[1]++;
+        } else if (planDelSuscriptor == 'P') {
+            repsPorPlan[2]++;
+        }
+
+        cout << "--> Reproduccion registrada correctamente." << endl;
+
+        cout << "\nIngrese el numero de reproduccion (0 para terminar): ";
+        cin >> nroReproduccion;
+
+    }
+
+    cout << "\n¡Lote de reproducciones cargado correctamente!" << endl;
+    return 1;
+}
 
 
 void mostrarReportes(int lotegeneroscargado, int lotecontenidoscargado,
                      int codigos[], string nombres[],
                      int codigosCont[], string titulos[], char tipos[], int codGenerosCont[],
-                     int repsPorContenido[], int compPorContenido[]) {
+                     int repsPorContenido[], int compPorContenido[], int repsPorPlan[]) {
+
+
+
+
+// REPORTE 1
 
     if (lotegeneroscargado == 0 || lotecontenidoscargado == 0) {
         cout << "Error: Faltan cargar lotes para poder ver los reportes." << endl;
@@ -272,7 +297,34 @@ void mostrarReportes(int lotegeneroscargado, int lotecontenidoscargado,
             cout << "No hay porcentaje ya que no hay reproducciones" << endl;
         }
     }
+
+// REPORTE 2
+
+
+    cout << "\n\n=== REPORTE 2: ACTIVIDAD POR PLAN DE SUSCRIPCION ===" << endl;
+
+
+    int totalSemana = repsPorPlan[0] + repsPorPlan[1] + repsPorPlan[2];
+
+    string nombresPlanes[3] = {"Basico", "Estandar", "Premium"};
+
+    for (int p = 0; p < 3; p++) {
+        cout << "\n-----------------------------------" << endl;
+        cout << "Plan: " << nombresPlanes[p] << endl;
+        cout << "Reproducciones totales: " << repsPorPlan[p] << endl;
+
+        if (totalSemana > 0) {
+            float porcentajePlan = (repsPorPlan[p] * 100.0) / totalSemana;
+            cout << "Porcentaje sobre el total semanal: " << porcentajePlan << "%" << endl;
+        } else {
+            cout << "Porcentaje sobre el total semanal: 0% (No hubo reproducciones)" << endl;
+        }
+    }
+
+
+
 }
+
 
 
 
