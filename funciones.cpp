@@ -196,6 +196,7 @@ int cargarreproducciones(int lotegeneroscargado, int lotecontenidoscargado, int 
             continue;
         }
 
+ //ACUMULADOR
 
         repsPorContenido[indiceContenido]++;
         if (completo == 1) {
@@ -203,6 +204,8 @@ int cargarreproducciones(int lotegeneroscargado, int lotecontenidoscargado, int 
         }
 
         repsPorSuscriptor[indiceSuscriptor]++;
+        int indiceGenero = codGenerosCont[indiceContenido] - 1;
+        repsPorGenDia[indiceGenero][dia - 1]++;
 
         char planDelSuscriptor = planes[indiceSuscriptor];
         if (planDelSuscriptor == 'B') {
@@ -213,129 +216,163 @@ int cargarreproducciones(int lotegeneroscargado, int lotecontenidoscargado, int 
             repsPorPlan[2]++;
         }
 
-        cout << "--> Reproduccion registrada correctamente." << endl;
-
+cout << "--> Reproduccion " << nroReproduccion << " registrada correctamente." << endl;
         cout << "\nIngrese el numero de reproduccion (0 para terminar): ";
         cin >> nroReproduccion;
 
     }
 
-    cout << "\n¡Lote de reproducciones cargado correctamente!" << endl;
+    cout << "\nï¿½Lote de reproducciones cargado correctamente!" << endl;
     return 1;
 }
 
-
-void mostrarReportes(int lotegeneroscargado, int lotecontenidoscargado,
+void mostrarReportes(int lotegeneroscargado, int lotecontenidoscargado, int lotesuscriptorcargado, int lotereproduccionescargado,
                      int codigos[], string nombres[],
-                     int codigosCont[], string titulos[], char tipos[], int codGenerosCont[],
-                     int repsPorContenido[], int compPorContenido[], int repsPorPlan[]) {
+                     int codigosCont[], string titulos[], char tipos[], float puntajes[], int codGenerosCont[],
+                     int repsPorContenido[], int compPorContenido[],
+                     int repsPorPlan[],
+                     int repsPorGenDia[][7],
+                     int codSus[], string nomSus[], char planes[], int repsPorSuscriptor[]) {
 
-
-
-
-// REPORTE 1
-
-    if (lotegeneroscargado == 0 || lotecontenidoscargado == 0) {
+    if (lotegeneroscargado == 0 || lotecontenidoscargado == 0 ||
+        lotesuscriptorcargado == 0 || lotereproduccionescargado == 0) {
         cout << "Error: Faltan cargar lotes para poder ver los reportes." << endl;
         return;
     }
+    
+//SUBMENU    
 
-    int auxrep, auxcc, auxcomp, auxgen;
-    string auxtc;
-    char auxtipo;
+    int opcionReporte;
+    do {
+        cout << "\n=== MENU DE REPORTES ===" << endl;
+        cout << "1. Ranking de contenidos mas reproducidos" << endl;
+        cout << "2. Actividad por plan de suscripcion" << endl;
+        cout << "3. Reproducciones por genero y dia de la semana" << endl;
+        cout << "4. Contenidos sin reproducciones" << endl;
+        cout << "5. Top 5 suscriptores + sorteo de acceso anticipado" << endl;
+        cout << "0. Volver al menu principal" << endl;
+        cout << "Ingrese una opcion: ";
+        cin >> opcionReporte;
 
-    for (int x = 0; x < 15; x++) {
-        for (int j = 0; j < 14; j++) {
-            if (repsPorContenido[j] < repsPorContenido[j+1]) {
-
-                auxrep = repsPorContenido[j];
-                repsPorContenido[j] = repsPorContenido[j+1];
-                repsPorContenido[j+1] = auxrep;
-
-                auxcc = codigosCont[j];
-                codigosCont[j] = codigosCont[j+1];
-                codigosCont[j+1] = auxcc;
-
-                auxtc = titulos[j];
-                titulos[j] = titulos[j+1];
-                titulos[j+1] = auxtc;
-
-                auxtipo = tipos[j];
-                tipos[j] = tipos[j+1];
-                tipos[j+1] = auxtipo;
-
-                auxgen = codGenerosCont[j];
-                codGenerosCont[j] = codGenerosCont[j+1];
-                codGenerosCont[j+1] = auxgen;
-
-                auxcomp = compPorContenido[j];
-                compPorContenido[j] = compPorContenido[j+1];
-                compPorContenido[j+1] = auxcomp;
+        switch(opcionReporte) {
+        case 1: {
+            int auxrep, auxcc, auxcomp, auxgen;
+            string auxtc;
+            char auxtipo;
+            for (int x = 0; x < 15; x++) {
+                for (int j = 0; j < 14; j++) {
+                    if (repsPorContenido[j] < repsPorContenido[j+1]) {
+                            
+                        auxrep = repsPorContenido[j];
+                        repsPorContenido[j] = repsPorContenido[j+1];
+                        repsPorContenido[j+1] = auxrep;
+                        
+                        auxcc = codigosCont[j];
+                        codigosCont[j] = codigosCont[j+1];
+                        codigosCont[j+1] = auxcc;
+                        
+                        auxtc = titulos[j];
+                        titulos[j] = titulos[j+1];
+                        titulos[j+1] = auxtc;
+                        
+                        auxtipo = tipos[j];
+                        tipos[j] = tipos[j+1];
+                        tipos[j+1] = auxtipo;
+                        
+                        auxgen = codGenerosCont[j];
+                        codGenerosCont[j] = codGenerosCont[j+1];
+                        codGenerosCont[j+1] = auxgen;
+                        
+                        auxcomp = compPorContenido[j];
+                        compPorContenido[j] = compPorContenido[j+1];
+                        compPorContenido[j+1] = auxcomp;
+                    }
+                }
             }
-        }
-    }
 
-    cout << "\n=== REPORTE 1: RANKING DE CONTENIDOS ===" << endl;
-    for (int i = 0; i < 15; i++) {
-        cout << "\n-----------------------------------" << endl;
-        cout << "Codigo: " << codigosCont[i] << endl;
-        cout << "Titulo: " << titulos[i] << endl;
-        cout << "Tipo: " << tipos[i] << endl;
-
-        string nombreGeneroActual = "";
-        for (int g = 0; g < 8; g++) {
-            if (codigos[g] == codGenerosCont[i]) {
-                nombreGeneroActual = nombres[g];
+//REPORTE 1
+            cout << "RANKING DE CONTENIDOS" << endl;
+            for (int i = 0; i < 15; i++) {
+                cout << "\n-----------------------------------" << endl;
+                cout << "Codigo: " << codigosCont[i] << endl;
+                cout << "Titulo: " << titulos[i] << endl;
+                cout << "Tipo: " << tipos[i] << endl;
+                string nombreGeneroActual = "";
+                for (int g = 0; g < 8; g++) {
+                    if (codigos[g] == codGenerosCont[i])
+                        nombreGeneroActual = nombres[g];
+                }
+                cout << "Genero: " << nombreGeneroActual << endl;
+                cout << "Reproducciones totales: " << repsPorContenido[i] << endl;
+                if (repsPorContenido[i] > 0)
+                    cout << "Porcentaje completadas: " << (compPorContenido[i] * 100.0) / repsPorContenido[i] << "%" << endl;
+                else
+                    cout << "Sin reproducciones" << endl;
             }
+            break;
         }
-        cout << "Genero: " << nombreGeneroActual << endl;
-        cout << "Reproducciones totales: " << repsPorContenido[i] << endl;
 
-        if (repsPorContenido[i] > 0) {
-            cout << "El porcentaje de las reproducciones completadas es de: " << (compPorContenido[i] * 100.0) / repsPorContenido[i] << "%" << endl;
-        } else {
-            cout << "No hay porcentaje ya que no hay reproducciones" << endl;
+//REPORTE 2
+        case 2: {
+            cout << "ACTIVIDAD POR PLAN" << endl;
+            int totalSemana = repsPorPlan[0] + repsPorPlan[1] + repsPorPlan[2];
+            string nombresPlanes[3] = {"Basico", "Estandar", "Premium"};
+            for (int p = 0; p < 3; p++) {
+                cout << "\n-----------------------------------" << endl;
+                cout << "Plan: " << nombresPlanes[p] << endl;
+                cout << "Reproducciones totales: " << repsPorPlan[p] << endl;
+                if (totalSemana > 0)
+                    cout << "Porcentaje: " << (repsPorPlan[p] * 100.0) / totalSemana << "%" << endl;
+                else
+                    cout << "Porcentaje: 0% (No hubo reproducciones)" << endl;
+            }
+            break;
         }
-    }
-
-// REPORTE 2
-
-
-    cout << "\n\n=== REPORTE 2: ACTIVIDAD POR PLAN DE SUSCRIPCION ===" << endl;
-
-
-    int totalSemana = repsPorPlan[0] + repsPorPlan[1] + repsPorPlan[2];
-
-    string nombresPlanes[3] = {"Basico", "Estandar", "Premium"};
-
-    for (int p = 0; p < 3; p++) {
-        cout << "\n-----------------------------------" << endl;
-        cout << "Plan: " << nombresPlanes[p] << endl;
-        cout << "Reproducciones totales: " << repsPorPlan[p] << endl;
-
-        if (totalSemana > 0) {
-            float porcentajePlan = (repsPorPlan[p] * 100.0) / totalSemana;
-            cout << "Porcentaje sobre el total semanal: " << porcentajePlan << "%" << endl;
-        } else {
-            cout << "Porcentaje sobre el total semanal: 0% (No hubo reproducciones)" << endl;
+        
+//REPORTE 3
+        case 3: {
+            cout << "REPRODUCCIONES POR GENERO Y DIA" << endl;
+            string diasSemana[7] = {"Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"};
+            for (int g = 0; g < 8; g++) {
+                cout << "\n-----------------------------------" << endl;
+                cout << "Genero: " << nombres[g] << endl;
+                for (int d = 0; d < 7; d++)
+                    cout << diasSemana[d] << ": " << repsPorGenDia[g][d] << " reproducciones" << endl;
+            }
+            break;
         }
-    }
-
-
-
+    
+//REPORTE 4
+        case 4: {
+            cout << "CONTENIDOS SIN REPRODUCCIONES" << endl;
+            bool contSinReps = false;
+            for (int i = 0; i < 15; i++) {
+                if (repsPorContenido[i] == 0) {
+                    contSinReps = true;
+                    cout << "\n-----------------------------------" << endl;
+                    cout << "Codigo: " << codigosCont[i] << endl;
+                    cout << "Titulo: " << titulos[i] << endl;
+                    cout << "Tipo: " << tipos[i] << endl;
+                    string nombreGenero = "";
+                    for (int g = 0; g < 8; g++) {
+                        if (codigos[g] == codGenerosCont[i])
+                            nombreGenero = nombres[g];
+                    }
+                    cout << "Genero: " << nombreGenero << endl;
+                    cout << "Calificacion promedio: " << puntajes[i] << endl;
+                }
+            }
+            if (contSinReps == false)
+                cout << "Todos los contenidos tuvieron reproducciones esta semana." << endl;
+            break;
+        }
+        case 5:
+            break;
+        case 0:
+            cout << "Volviendo al menu principal..." << endl;
+            break;
+        default:
+            cout << "Opcion incorrecta." << endl;
+        }
+    } while (opcionReporte != 0);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
