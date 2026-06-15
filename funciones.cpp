@@ -19,7 +19,7 @@ void mostrarmenu() {
 
 int cargargeneros(int codigos[], string nombres[]) {
 
-    for (int i = 0; i < 8; i++) {
+    for (int i = 0; i < 3; i++) {
         int cg;
         string ng;
         cout << "\nRegistro " << i + 1 << " de 8:" << endl;
@@ -50,7 +50,7 @@ int cargarcontenidos(int lotegeneroscargado, int codigosCont[], string titulos[]
         cout << "ERROR: Debe cargar el lote 1 primero." << endl;
         return 0;
     }
-    for (int i = 0; i < 15; i++) {
+    for (int i = 0; i < 4; i++) {
         cout << "Ingrese el codigo del contenido(3 digitos no consecutivos)" << endl;
         cin >> codcont;
         cout << "Ingrese el titulo" << endl;
@@ -98,7 +98,7 @@ int cargarsuscriptores(int codSus[], int cantPan[], string nomSus[], char planes
     int codsuscriptor, cantpantallas;
     string nomsuscriptor;
     char plan;
-    for (int i = 0; i < 12; i++) {
+    for (int i = 0; i < 5; i++) {
         cout << "Ingrese el codigo de suscriptor (1 a 12)" << endl;
         cin >> codsuscriptor;
         if (codsuscriptor < 1 || codsuscriptor > 12) {
@@ -425,8 +425,7 @@ for (int x=0;x<12;x++){
                 cout << "Reproducciones: " << repsPorSuscriptor[i] << "\n" << endl;
             }
 
-            // ¡ACA FALTABA LA LOGICA DEL SORTEO!
-            int ganador1 = rand() % 5;
+           int ganador1 = rand() % 5;
             int ganador2;
 
             do {
