@@ -17,10 +17,12 @@ int cargarreproducciones(int lotegeneroscargado, int lotecontenidoscargado, int 
                          int repsPorContenido[], int compPorContenido[],
                          int repsPorPlan[], int repsPorGenDia[][7], int repsPorSuscriptor[]);
 
-void mostrarReportes(int lotegeneroscargado, int lotecontenidoscargado,
+void mostrarReportes(int lotegeneroscargado, int lotecontenidoscargado, int lotesuscriptorcargado, int lotereproduccionescargado,
                      int codigos[], string nombres[],
-                     int codigosCont[], string titulos[], char tipos[], int codGenerosCont[],
-                     int repsPorContenido[], int compPorContenido[], int repsPorPlan[]);
-
+                     int codigosCont[], string titulos[], char tipos[], float puntajes[], int codGenerosCont[],
+                     int repsPorContenido[], int compPorContenido[],
+                     int repsPorPlan[],
+                     int repsPorGenDia[][7],
+                     int codSus[], string nomSus[], char planes[], int repsPorSuscriptor[]);
 
 #endif
