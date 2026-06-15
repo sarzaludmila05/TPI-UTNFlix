@@ -15,14 +15,17 @@ int cargarreproducciones(int lotegeneroscargado, int lotecontenidoscargado, int 
                          int codigosCont[], char tipos[], int duraciones[], int codGenerosCont[],
                          int codSus[], char planes[],
                          int repsPorContenido[], int compPorContenido[],
-                         int repsPorPlan[], int repsPorGenDia[][7], int repsPorSuscriptor[]);
+                         int repsPorPlan[], int repsPorSuscriptor[],
+                         int repsLunes[], int repsMartes[], int repsMiercoles[],
+                         int repsJueves[], int repsViernes[], int repsSabado[], int repsDomingo[]);
 
 void mostrarReportes(int lotegeneroscargado, int lotecontenidoscargado, int lotesuscriptorcargado, int lotereproduccionescargado,
                      int codigos[], string nombres[],
                      int codigosCont[], string titulos[], char tipos[], float puntajes[], int codGenerosCont[],
                      int repsPorContenido[], int compPorContenido[],
                      int repsPorPlan[],
-                     int repsPorGenDia[][7],
-                     int codSus[], string nomSus[], char planes[], int repsPorSuscriptor[]);
+                     int codSus[], string nomSus[], char planes[], int repsPorSuscriptor[],
+                     int repsLunes[], int repsMartes[], int repsMiercoles[],
+                     int repsJueves[], int repsViernes[], int repsSabado[], int repsDomingo[]);
 
 #endif

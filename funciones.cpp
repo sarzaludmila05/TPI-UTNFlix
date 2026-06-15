@@ -1,5 +1,7 @@
 #include <iostream>
 #include "funciones.h"
+#include <cstdlib>
+#include <ctime>
 using namespace std;
 
 
@@ -132,11 +134,15 @@ int cargarreproducciones(int lotegeneroscargado, int lotecontenidoscargado, int 
                          int codigosCont[], char tipos[], int duraciones[], int codGenerosCont[],
                          int codSus[], char planes[],
                          int repsPorContenido[], int compPorContenido[],
-                         int repsPorPlan[], int repsPorGenDia[][7], int repsPorSuscriptor[]) {
-    if (lotegeneroscargado == 0 || lotecontenidoscargado == 0 || lotesuscriptorcargado == 0) {
+                         int repsPorPlan[], int repsPorSuscriptor[],
+                         int repsLunes[], int repsMartes[], int repsMiercoles[],
+                         int repsJueves[], int repsViernes[], int repsSabado[], int repsDomingo[]) {
+
+        if (lotegeneroscargado == 0 || lotecontenidoscargado == 0 || lotesuscriptorcargado == 0) {
         cout << "ERROR: Debe cargar los lotes 1, 2 y 3 primero." << endl;
         return 0;
     }
+
     int nroReproduccion;
     cout << "Ingrese el numero de reproduccion (0 para terminar): ";
     cin >> nroReproduccion;
@@ -197,17 +203,25 @@ int cargarreproducciones(int lotegeneroscargado, int lotecontenidoscargado, int 
         }
 
  //ACUMULADOR
-
-        repsPorContenido[indiceContenido]++;
+repsPorContenido[indiceContenido]++;
         if (completo == 1) {
             compPorContenido[indiceContenido]++;
         }
 
         repsPorSuscriptor[indiceSuscriptor]++;
+
         int indiceGenero = codGenerosCont[indiceContenido] - 1;
-        repsPorGenDia[indiceGenero][dia - 1]++;
+
+        if (dia == 1) repsLunes[indiceGenero]++;
+        else if (dia == 2) repsMartes[indiceGenero]++;
+        else if (dia == 3) repsMiercoles[indiceGenero]++;
+        else if (dia == 4) repsJueves[indiceGenero]++;
+        else if (dia == 5) repsViernes[indiceGenero]++;
+        else if (dia == 6) repsSabado[indiceGenero]++;
+        else if (dia == 7) repsDomingo[indiceGenero]++;
 
         char planDelSuscriptor = planes[indiceSuscriptor];
+
         if (planDelSuscriptor == 'B') {
             repsPorPlan[0]++;
         } else if (planDelSuscriptor == 'S') {
@@ -222,7 +236,7 @@ cout << "--> Reproduccion " << nroReproduccion << " registrada correctamente." <
 
     }
 
-    cout << "\n�Lote de reproducciones cargado correctamente!" << endl;
+    cout << "\n Lote de reproducciones cargado correctamente!" << endl;
     return 1;
 }
 
@@ -231,16 +245,17 @@ void mostrarReportes(int lotegeneroscargado, int lotecontenidoscargado, int lote
                      int codigosCont[], string titulos[], char tipos[], float puntajes[], int codGenerosCont[],
                      int repsPorContenido[], int compPorContenido[],
                      int repsPorPlan[],
-                     int repsPorGenDia[][7],
-                     int codSus[], string nomSus[], char planes[], int repsPorSuscriptor[]) {
+                     int codSus[], string nomSus[], char planes[], int repsPorSuscriptor[],
+                     int repsLunes[], int repsMartes[], int repsMiercoles[],
+                     int repsJueves[], int repsViernes[], int repsSabado[], int repsDomingo[]) {
 
     if (lotegeneroscargado == 0 || lotecontenidoscargado == 0 ||
         lotesuscriptorcargado == 0 || lotereproduccionescargado == 0) {
         cout << "Error: Faltan cargar lotes para poder ver los reportes." << endl;
         return;
     }
-    
-//SUBMENU    
+
+//SUBMENU
 
     int opcionReporte;
     do {
@@ -262,27 +277,27 @@ void mostrarReportes(int lotegeneroscargado, int lotecontenidoscargado, int lote
             for (int x = 0; x < 15; x++) {
                 for (int j = 0; j < 14; j++) {
                     if (repsPorContenido[j] < repsPorContenido[j+1]) {
-                            
+
                         auxrep = repsPorContenido[j];
                         repsPorContenido[j] = repsPorContenido[j+1];
                         repsPorContenido[j+1] = auxrep;
-                        
+
                         auxcc = codigosCont[j];
                         codigosCont[j] = codigosCont[j+1];
                         codigosCont[j+1] = auxcc;
-                        
+
                         auxtc = titulos[j];
                         titulos[j] = titulos[j+1];
                         titulos[j+1] = auxtc;
-                        
+
                         auxtipo = tipos[j];
                         tipos[j] = tipos[j+1];
                         tipos[j+1] = auxtipo;
-                        
+
                         auxgen = codGenerosCont[j];
                         codGenerosCont[j] = codGenerosCont[j+1];
                         codGenerosCont[j+1] = auxgen;
-                        
+
                         auxcomp = compPorContenido[j];
                         compPorContenido[j] = compPorContenido[j+1];
                         compPorContenido[j+1] = auxcomp;
@@ -328,20 +343,25 @@ void mostrarReportes(int lotegeneroscargado, int lotecontenidoscargado, int lote
             }
             break;
         }
-        
+
 //REPORTE 3
-        case 3: {
+            case 3: {
             cout << "REPRODUCCIONES POR GENERO Y DIA" << endl;
-            string diasSemana[7] = {"Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"};
+
             for (int g = 0; g < 8; g++) {
                 cout << "\n-----------------------------------" << endl;
                 cout << "Genero: " << nombres[g] << endl;
-                for (int d = 0; d < 7; d++)
-                    cout << diasSemana[d] << ": " << repsPorGenDia[g][d] << " reproducciones" << endl;
+                cout << "Lunes: " << repsLunes[g] << " reproducciones" << endl;
+                cout << "Martes: " << repsMartes[g] << " reproducciones" << endl;
+                cout << "Miercoles: " << repsMiercoles[g] << " reproducciones" << endl;
+                cout << "Jueves: " << repsJueves[g] << " reproducciones" << endl;
+                cout << "Viernes: " << repsViernes[g] << " reproducciones" << endl;
+                cout << "Sabado: " << repsSabado[g] << " reproducciones" << endl;
+                cout << "Domingo: " << repsDomingo[g] << " reproducciones" << endl;
             }
             break;
         }
-    
+
 //REPORTE 4
         case 4: {
             cout << "CONTENIDOS SIN REPRODUCCIONES" << endl;
@@ -366,13 +386,66 @@ void mostrarReportes(int lotegeneroscargado, int lotecontenidoscargado, int lote
                 cout << "Todos los contenidos tuvieron reproducciones esta semana." << endl;
             break;
         }
-        case 5:
+        case 5:{
+int auxreps,auxcod;
+char auxplan;
+ string auxnom;
+for (int x=0;x<12;x++){
+    for (int i=0;i<11;i++){
+        if (repsPorSuscriptor[i]<repsPorSuscriptor[i+1]){
+
+            auxreps=repsPorSuscriptor[i];
+            repsPorSuscriptor[i]=repsPorSuscriptor[i+1];
+            repsPorSuscriptor[i+1]=auxreps;
+
+            auxcod=codSus[i];
+            codSus[i]=codSus[i+1];
+            codSus[i+1]=auxcod;
+
+            auxnom = nomSus[i];
+            nomSus[i] = nomSus[i+1];
+            nomSus[i+1] = auxnom;
+
+            auxplan=planes[i];
+            planes[i]=planes[i+1];
+            planes[i+1]=auxplan;
+
+
+        }
+    }
+}
+
+//reporte 5
+        cout << "\n--- LOS 5 SUSCRIPTORES CON MAS ACTIVIDAD ---" << endl;
+            for (int i = 0; i < 5; i++) {
+                cout << "Puesto #" << i + 1 << ":" << endl;
+                cout << "Nombre: " << nomSus[i] << endl;
+                cout << "Codigo: " << codSus[i] << endl;
+                cout << "Plan: " << planes[i] << endl;
+                cout << "Reproducciones: " << repsPorSuscriptor[i] << "\n" << endl;
+            }
+
+            // ¡ACA FALTABA LA LOGICA DEL SORTEO!
+            int ganador1 = rand() % 5;
+            int ganador2;
+
+            do {
+                ganador2 = rand() % 5;
+            } while (ganador2 == ganador1);
+
+            cout << "--- GANADORES DEL SORTEO DE ACCESO ANTICIPADO ---" << endl;
+            cout << "Primer ganador: " << nomSus[ganador1] << " (" << repsPorSuscriptor[ganador1] << " reproducciones)" << endl;
+            cout << "Segundo ganador: " << nomSus[ganador2] << " (" << repsPorSuscriptor[ganador2] << " reproducciones)" << endl;
+
             break;
+        }
         case 0:
             cout << "Volviendo al menu principal..." << endl;
             break;
         default:
             cout << "Opcion incorrecta." << endl;
+            break;
         }
     } while (opcionReporte != 0);
 }
+

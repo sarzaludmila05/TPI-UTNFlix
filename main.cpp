@@ -3,6 +3,7 @@
 using namespace std;
 
 int main() {
+    srand(time(0));
     int opcion;
 
     // Lote 1
@@ -30,8 +31,17 @@ int main() {
     int repsPorContenido[15] = {0};
     int compPorContenido[15] = {0};
     int repsPorPlan[3] = {0};
-    int repsPorGenDia[8][7] = {{0}};
     int repsPorSuscriptor[12] = {0};
+
+    // Los 7 vectores para reemplazar la matriz
+    int repsLunes[8] = {0};
+    int repsMartes[8] = {0};
+    int repsMiercoles[8] = {0};
+    int repsJueves[8] = {0};
+    int repsViernes[8] = {0};
+    int repsSabado[8] = {0};
+    int repsDomingo[8] = {0};
+
     int lotereproduccionescargado = 0;
 
     do {
@@ -59,7 +69,8 @@ int main() {
                     codigosCont, tipos, duraciones, codGenerosCont,
                     codSus, planes,
                     repsPorContenido, compPorContenido,
-                    repsPorPlan, repsPorGenDia, repsPorSuscriptor);
+                    repsPorPlan, repsPorSuscriptor,
+                    repsLunes, repsMartes, repsMiercoles, repsJueves, repsViernes, repsSabado, repsDomingo);
                 break;
             case 5:
                 cout << "Seleccionaste la opcion numero 5 (Reportes)." << endl;
@@ -68,8 +79,8 @@ int main() {
                     codigosCont, titulos, tipos, puntajes, codGenerosCont,
                     repsPorContenido, compPorContenido,
                     repsPorPlan,
-                    repsPorGenDia,
-                    codSus, nomSus, planes, repsPorSuscriptor);
+                    codSus, nomSus, planes, repsPorSuscriptor,
+                    repsLunes, repsMartes, repsMiercoles, repsJueves, repsViernes, repsSabado, repsDomingo);
                 break;
             case 6:
                 cout << "Saliendo..." << endl;
