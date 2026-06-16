@@ -19,7 +19,7 @@ void mostrarmenu() {
 
 int cargargeneros(int codigos[], string nombres[]) {
 
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < 8; i++) {
         int cg;
         string ng;
         cout << "\nRegistro " << i + 1 << " de 8:" << endl;
@@ -45,12 +45,13 @@ int cargargeneros(int codigos[], string nombres[]) {
 int cargarcontenidos(int lotegeneroscargado, int codigosCont[], string titulos[], char tipos[], int duraciones[], float puntajes[], int codGenerosCont[], int codigos[]) {
     string titulo;
     char tipo;
-    int duracion, puntaje, codcont, codg;
+    int duracion,codcont, codg;
+    float puntaje;
     if (lotegeneroscargado==0) {
         cout << "ERROR: Debe cargar el lote 1 primero." << endl;
         return 0;
     }
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < 15; i++) {
         cout << "Ingrese el codigo del contenido(3 digitos no consecutivos)" << endl;
         cin >> codcont;
         cout << "Ingrese el titulo" << endl;
@@ -98,7 +99,7 @@ int cargarsuscriptores(int codSus[], int cantPan[], string nomSus[], char planes
     int codsuscriptor, cantpantallas;
     string nomsuscriptor;
     char plan;
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < 12; i++) {
         cout << "Ingrese el codigo de suscriptor (1 a 12)" << endl;
         cin >> codsuscriptor;
         if (codsuscriptor < 1 || codsuscriptor > 12) {
