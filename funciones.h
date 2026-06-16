@@ -6,7 +6,6 @@
 
 using namespace std;
 
-// Prototipos de funciones
 void mostrarmenu();
 int cargargeneros(int codigos[], string nombres[]);
 int cargarcontenidos(int lotegeneroscargado, int codigosCont[], string titulos[], char tipos[], int duraciones[], float puntajes[], int codGenerosCont[], int codigos[]);

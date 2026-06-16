@@ -33,7 +33,6 @@ int main() {
     int repsPorPlan[3] = {0};
     int repsPorSuscriptor[12] = {0};
 
-    // Los 7 vectores para reemplazar la matriz
     int repsLunes[8] = {0};
     int repsMartes[8] = {0};
     int repsMiercoles[8] = {0};

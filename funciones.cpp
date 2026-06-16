@@ -19,7 +19,7 @@ void mostrarmenu() {
 
 int cargargeneros(int codigos[], string nombres[]) {
 
-    for (int i = 0; i < 8; i++) {
+    for (int i = 0; i < 3; i++) {
         int cg;
         string ng;
         cout << "\nRegistro " << i + 1 << " de 8:" << endl;
